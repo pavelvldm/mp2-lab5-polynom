@@ -44,3 +44,57 @@ TEST(List, cant_get_element_with_large_index)
 
 	ASSERT_ANY_THROW(testList[5]);
 }
+
+TEST(List, can_find_element_in_list)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+	
+	EXPECT_EQ(3, (testList.FindElem(3))->data);
+}
+
+TEST(List, cant_find_element_with_negative_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	ASSERT_ANY_THROW(testList.FindElem(-9));
+}
+
+TEST(List, cant_find_element_with_large_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	ASSERT_ANY_THROW(testList.FindElem(7));
+}
+
+TEST(List, can_sort_list)
+{
+	List<int> testList;
+
+	srand(time(0));
+
+	for (int i = 4; i > -1; i--)
+		testList.push_back(rand() % 100 - 1);
+
+	testList.Sort();
+
+	bool f = true;
+	int i = 0;
+
+	while ((!f) && (i < testList.GetAmount()))
+	{
+		if (testList[i] > testList[i + 1])
+			f = false;
+		i++;
+	}
+
+	EXPECT_EQ(true, f);
+}
