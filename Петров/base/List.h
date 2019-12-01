@@ -8,6 +8,7 @@ class List
 	struct Node
 	{
 		T data;
+		unsigned int degr;
 		Node *pNext;
 	};
 
@@ -16,10 +17,9 @@ class List
 
 public:
 	List();
-	List(const int &am);
 	~List();
 
-	void push_back(const T &val);
+	void push_back(const T &val, const int &d = 0);
 
 	T& operator[](const int ind);
 	int GetAmount() { return Amount; }

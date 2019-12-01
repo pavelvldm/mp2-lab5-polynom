@@ -6,24 +6,12 @@ List<T>::List() : Head(nullptr), Amount(0)
 }
 
 template<typename T>
-List<T>::List(const int &am)
-{
-	if ((am < 1) || (am > MAX_LIST_SIZE)) 
-		throw std::exception("Wrong amount");
-
-	Amount = am;
-
-	for (int i = 0; i < Amount; i++)
-		push_back(0);
-}
-
-template<typename T>
 List<T>::~List()
 {
 }
 
 template<typename T>
-void List<T>::push_back(const T &val)
+void List<T>::push_back(const T &val, const int &d = 0)
 {
 	if (Amount == MAX_LIST_SIZE)
 		throw std::exception("Is Full");
@@ -33,6 +21,7 @@ void List<T>::push_back(const T &val)
 		Head = new Node;
 		Head->pNext = nullptr;
 		Head->data = val;
+		Head->degr = d;
 
 		Amount++;
 	}
@@ -46,6 +35,7 @@ void List<T>::push_back(const T &val)
 		p->pNext = new Node;
 		p->pNext->pNext = nullptr;
 		p->pNext->data = val;
+		p->pNext->degr = d;
 
 		Amount++;
 	}
@@ -71,29 +61,6 @@ T& List<T>::operator[](const int ind)
 
 	return p->data;
 }
-
-/* template<typename T>
-List<T>::Node* List<T>::FindVal(const T &val)
-{
-	Node *p = Head;
-	Node *pp = nullptr;
-
-	if (p == nullptr) return p;
-	if (p->data == val)
-		pp = p;
-
-	while (p->pNext != nullptr)
-	{
-		p = p->pNext;
-		if (p->data == val)
-		{
-			pp = p;
-			break;
-		}
-	}
-
-	return pp;
-} */
 
 template<typename T>
 void List<T>::Sort()
