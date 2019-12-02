@@ -8,6 +8,19 @@ List<T>::List() : Head(nullptr), Amount(0)
 template<typename T>
 List<T>::~List()
 {
+	if (Head != nullptr)
+	{
+		Node *p;
+
+		while (Head->pNext != nullptr)
+		{
+			p = Head->pNext;
+			delete Head;
+			Head = p;
+		}
+
+		delete Head;
+	}
 }
 
 template<typename T>

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const int MAX_POLYNOM_POW = 10;
+
 class Polynom
 {
 	List<double> coef;
