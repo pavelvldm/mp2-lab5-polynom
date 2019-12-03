@@ -8,19 +8,18 @@ List<T>::List() : Head(nullptr), Amount(0)
 template<typename T>
 List<T>::~List()
 {
-	if (Head != nullptr)
+	/*if (Head != nullptr)
 	{
-		Node *p;
-
 		while (Head->pNext != nullptr)
 		{
-			p = Head->pNext;
-			delete Head;
-			Head = p;
+			Node *p = Head;
+			Head = Head->pNext;
+			delete p;
 		}
 
-		delete Head;
-	}
+		Node *p = Head;
+		delete p;
+	}*/
 }
 
 template<typename T>
@@ -55,7 +54,19 @@ void List<T>::push_back(const T &val, const int &d = 0)
 }
 
 template<typename T>
-T& List<T>::operator[](const int ind)
+void List<T>::pop_front()
+{
+	if (Head != nullptr)
+	{
+		Node *p = Head;
+		Head = Head->pNext;
+		delete p;
+		Amount--;
+	}
+}
+
+template<typename T>
+unsigned int& List<T>::operator[](const int ind)
 {
 	if ((ind < 0) || (ind > Amount - 1))
 		throw std::exception("Wrong ind");
@@ -64,7 +75,7 @@ T& List<T>::operator[](const int ind)
 	Node *p = Head;
 
 	if (ind == 0)
-		return p->data;
+		return p->degr;
 
 	while ((p->pNext != nullptr) && (i != ind))
 	{
@@ -72,20 +83,18 @@ T& List<T>::operator[](const int ind)
 		i++;
 	}
 
-	return p->data;
+	return p->degr;
 }
 
 template<typename T>
 void List<T>::Sort()
 {
-	T x;
-
 	for (int i = 1; i < Amount; i++)
 	{
 		Node *Current = FindElem(i);
 		int j = i - 1;
 
-		while ((j > -1) && (Current->data < this->operator[](j)))
+		while ((j > -1) && (Current->degr < this->operator[](j)))
 		{
 			Node *tmp, *p, *pp, *pr;
 
@@ -115,7 +124,7 @@ void List<T>::Sort()
 			}
 		}
 
-		if (Current->data < Head->data)
+		if (Current->degr < Head->degr)
 			Head = Current;
 	}
 }
@@ -129,10 +138,12 @@ void List<T>::PrintList()
 		return;
 
 	std::cout << p->data << ' ';
+	std::cout << p->degr << std::endl;
 
 	while (p->pNext != nullptr)
 	{
 		p = p->pNext;
 		std::cout << p->data << ' ';
+		std::cout << p->degr << std::endl;
 	}
 }

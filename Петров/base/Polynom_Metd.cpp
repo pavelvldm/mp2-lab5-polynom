@@ -9,6 +9,11 @@ void TransformStr(string &s)
 		s.erase(i, 1);
 	}
 
+	while ((i = s.find(',')) != string::npos)
+	{
+		s.replace(i, 1, ".");
+	}
+
 	if (s[0] != '-')
 		s = '+' + s;
 
@@ -24,7 +29,10 @@ int RetPowX(string &s, int &num, int &end)
 		return 1;
 
 	if ((s[j] == 'y') || (s[j] == 'z'))
+	{
+		num = j;
 		return 1;
+	}
 
 	if (s[j] == '^')
 		while ((j < end) && (s[j] != 'y') && (s[j] != 'z'))
@@ -47,7 +55,10 @@ int RetPowY(string &s, int &num, int &end)
 		return 1;
 
 	if ((s[j] == 'x') || (s[j] == 'z'))
+	{
+		num = j;
 		return 1;
+	}
 
 	if (s[j] == '^')
 		while ((j < end) && (s[j] != 'x') && (s[j] != 'z'))
@@ -70,7 +81,10 @@ int RetPowZ(string &s, int &num, int &end)
 		return 1;
 
 	if ((s[j] == 'x') || (s[j] == 'y'))
+	{
+		num = j;
 		return 1;
+	}
 
 	if (s[j] == '^')
 		while ((j < end) && (s[j] != 'x') && (s[j] != 'y'))
@@ -103,7 +117,6 @@ void Polynom::CreatePolynom(string &s)
 	while (s.size() != 1)
 	{
 		int st, end, num = -1;
-		int j;
 		double coeff;
 		int degree;
 		int powx = 0, powy = 0, powz = 0;
@@ -152,59 +165,70 @@ void Polynom::CreatePolynom(string &s)
 			continue; 
 		}
 
+		bool f1 = false, f2 = false;
+
 		// выдел€ем степени
-		if ((s[num] == 'x') && (num < end))
+		if ((s[num] == 'x') && (num < end) && (!f1))
 		{
 			powx = RetPowX(s, num, end);
+			f1 = true;
 
-			if ((num < end) && (s[num] == 'y'))
+			if ((num < end) && (s[num] == 'y') && (!f2))
 			{
 				powy = RetPowY(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'z'))
 					powz = RetPowZ(s, num, end);
 			}
 
-			if ((num < end) && (s[num] == 'z'))
+			if ((num < end) && (s[num] == 'z') && (!f2))
 			{
 				powz = RetPowZ(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'y'))
 					powy = RetPowY(s, num, end);
 			}
 		}
 
-		if ((s[num] == 'y') && (num < end))
+		if ((s[num] == 'y') && (num < end) && (!f1))
 		{
 			powy = RetPowY(s, num, end);
+			f1 = true;
 
-			if ((num < end) && (s[num] == 'x'))
+			if ((num < end) && (s[num] == 'x') && (!f2))
 			{
 				powx = RetPowX(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'z'))
 					powz = RetPowZ(s, num, end);
 			}
 
-			if ((num < end) && (s[num] == 'z'))
+			if ((num < end) && (s[num] == 'z') && (!f2))
 			{
 				powz = RetPowZ(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'x'))
 					powx = RetPowX(s, num, end);
 			}
 		}
 
-		if ((s[num] == 'z') && (num < end))
+		if ((s[num] == 'z') && (num < end) && (!f1))
 		{
 			powz = RetPowZ(s, num, end);
+			f1 = true;
 
-			if ((num < end) && (s[num] == 'y'))
+			if ((num < end) && (s[num] == 'y') && (!f2))
 			{
 				powy = RetPowY(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'x'))
 					powx = RetPowX(s, num, end);
 			}
 
-			if ((num < end) && (s[num] == 'x'))
+			if ((num < end) && (s[num] == 'x') && (!f2))
 			{
 				powx = RetPowX(s, num, end);
+				f2 = true;
 				if ((num < end) && (s[num] == 'y'))
 					powy = RetPowY(s, num, end);
 			}
@@ -215,6 +239,9 @@ void Polynom::CreatePolynom(string &s)
 
 		degree = powx * 100 + powy * 10 + powz;
 
+		if (s[st] == '-')
+			coeff = -1 * coeff;
+
 		coef.push_back(coeff, degree);
 
 		// удал€ем обработанный моном
@@ -222,4 +249,9 @@ void Polynom::CreatePolynom(string &s)
 	}
 
 	coef.Sort();
+}
+
+void Polynom::PrintPolynom()
+{
+	coef.PrintList();
 }

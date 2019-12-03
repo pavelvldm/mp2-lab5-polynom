@@ -17,8 +17,9 @@ TEST(Polynom, correct_transform)
 
 TEST(Polynom, can_transform_string_to_polynom)
 {
-	string s = "2x^2y^4z - 2.74xyz^6 + 36 - 14y - 81z^2";
+	string s = "5 x - 74 ,9 7y + 2, 75 z - 9 7 x^3y + 1, 9 9 9y^7x^3z - 11,7 zx^5 + 11";
 
 	Polynom testP;
 	testP.CreatePolynom(s);
+	testP.PrintPolynom();
 }

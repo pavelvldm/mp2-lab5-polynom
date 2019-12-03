@@ -15,6 +15,7 @@ public:
 	~Polynom();
 
 	void CreatePolynom(string &s);
-	
+
+	void PrintPolynom();
 };
 

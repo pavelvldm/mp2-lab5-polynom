@@ -20,9 +20,12 @@ public:
 	~List();
 
 	void push_back(const T &val, const int &d = 0);
+	void pop_front();
 
-	T& operator[](const int ind);
+	unsigned int& operator[](const int ind);
 	int GetAmount() { return Amount; }
+
+	Node* GetHead() { return Head; }
 
 	// возвращает адрес элемента по индексу
 	Node* FindElem(const T &ind)
