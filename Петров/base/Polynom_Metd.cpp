@@ -1,4 +1,5 @@
 #include "Polynom.h"
+#include "List.h"
 
 void TransformStr(string &s)
 {
@@ -248,7 +249,61 @@ void Polynom::CreatePolynom(string &s)
 		s.erase(st, end - st);
 	}
 
+
 	coef.Sort();
+}
+
+void CreateString()
+{
+}
+
+Polynom Polynom::operator+(const Polynom &polyOut)
+{
+	Polynom Result;
+
+	Result.coef = polyOut.coef;
+
+	Node<double> *p = coef.GetHead();
+	Node<double> *pp;
+
+	pp = Result.coef.FindDegr(p->degr);
+
+	if (pp != nullptr)
+		pp->data += p->data;
+	else
+		Result.coef.push_back(p->data, p->degr);
+
+	while (p->pNext != nullptr)
+	{
+		p = p->pNext;
+
+		pp = Result.coef.FindDegr(p->degr);
+
+		if (pp != nullptr)
+			pp->data += p->data;
+		else
+			Result.coef.push_back(p->data, p->degr);
+	}
+
+	// чистить нулевые и сортировать !!!
+}
+
+Polynom& Polynom::MulScalar(const int &scal)
+{
+	Node<double> *p = coef.GetHead();
+
+	if (p != nullptr)
+	{
+		p->data = scal * p->data;
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+			p->data = scal * p->data;
+		}
+	}
+
+	return *this;
 }
 
 void Polynom::PrintPolynom()

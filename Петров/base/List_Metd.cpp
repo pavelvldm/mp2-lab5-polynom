@@ -8,18 +8,18 @@ List<T>::List() : Head(nullptr), Amount(0)
 template<typename T>
 List<T>::~List()
 {
-	/*if (Head != nullptr)
+	if (Head != nullptr)
 	{
 		while (Head->pNext != nullptr)
 		{
-			Node *p = Head;
+			Node<T> *p = Head;
 			Head = Head->pNext;
 			delete p;
 		}
 
-		Node *p = Head;
+		Node<T> *p = Head;
 		delete p;
-	}*/
+	}
 }
 
 template<typename T>
@@ -30,7 +30,7 @@ void List<T>::push_back(const T &val, const int &d = 0)
 
 	if (Head == nullptr)
 	{
-		Head = new Node;
+		Head = new Node<T>;
 		Head->pNext = nullptr;
 		Head->data = val;
 		Head->degr = d;
@@ -39,12 +39,12 @@ void List<T>::push_back(const T &val, const int &d = 0)
 	}
 	else
 	{
-		Node *p = this->Head;
+		Node<T> *p = this->Head;
 
 		while (p->pNext != nullptr)
 			p = p->pNext;
 
-		p->pNext = new Node;
+		p->pNext = new Node<T>;
 		p->pNext->pNext = nullptr;
 		p->pNext->data = val;
 		p->pNext->degr = d;
@@ -58,7 +58,7 @@ void List<T>::pop_front()
 {
 	if (Head != nullptr)
 	{
-		Node *p = Head;
+		Node<T> *p = Head;
 		Head = Head->pNext;
 		delete p;
 		Amount--;
@@ -66,13 +66,34 @@ void List<T>::pop_front()
 }
 
 template<typename T>
-unsigned int& List<T>::operator[](const int ind)
+T& List<T>::operator[](const int ind)
 {
 	if ((ind < 0) || (ind > Amount - 1))
 		throw std::exception("Wrong ind");
 
 	int i = 0;
-	Node *p = Head;
+	Node<T> *p = Head;
+
+	if (ind == 0)
+		return p->data;
+
+	while ((p->pNext != nullptr) && (i != ind))
+	{
+		p = p->pNext;
+		i++;
+	}
+
+	return p->data;
+}
+
+template<typename T>
+unsigned int List<T>::GetDegree(const int ind)
+{
+	if ((ind < 0) || (ind > Amount - 1))
+		throw std::exception("Wrong ind");
+
+	int i = 0;
+	Node<T> *p = Head;
 
 	if (ind == 0)
 		return p->degr;
@@ -87,16 +108,40 @@ unsigned int& List<T>::operator[](const int ind)
 }
 
 template<typename T>
+List<T>& List<T>::operator=(const List<T> &listOut)
+{
+	if (this != &listOut)
+	{
+		delete this;
+
+		Node<T> *p = listOut.GetHead();
+		
+		if (p != nullptr)
+		{
+			push_back(p->data, p->degr);
+
+			while (p->pNext != nullptr)
+			{
+				p = p->pNext;
+				push_back(p->data, p->degr);
+			}
+		}
+	}
+
+	return *this;
+}
+
+template<typename T>
 void List<T>::Sort()
 {
 	for (int i = 1; i < Amount; i++)
 	{
-		Node *Current = FindElem(i);
+		Node<T> *Current = FindElem(i);
 		int j = i - 1;
 
-		while ((j > -1) && (Current->degr < this->operator[](j)))
+		while ((j > -1) && (Current->degr < GetDegree(j)))
 		{
-			Node *tmp, *p, *pp, *pr;
+			Node<T> *tmp, *p, *pp, *pr;
 
 			if (j > 0)
 			{
@@ -132,7 +177,7 @@ void List<T>::Sort()
 template<typename T>
 void List<T>::PrintList()
 {
-	Node *p = Head;
+	Node<T> *p = Head;
 
 	if (p == nullptr)
 		return;

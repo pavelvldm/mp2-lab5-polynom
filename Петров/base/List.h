@@ -3,16 +3,31 @@
 const int MAX_LIST_SIZE = 1000;
 
 template<typename T>
+struct Node
+{
+	T data;
+	unsigned int degr;
+	Node *pNext;
+
+	Node()
+	{
+		this->data = 0;
+		this->degr = 0;
+		this->pNext = nullptr;
+	}
+
+	Node(T dataOut, int dOut, Node *pN = nullptr)
+	{
+		this->data = dataOut;
+		this->degr = dOut;
+		this->pNext = pN;
+	}
+};
+
+template<typename T>
 class List
 {
-	struct Node
-	{
-		T data;
-		unsigned int degr;
-		Node *pNext;
-	};
-
-	Node *Head;
+	Node<T> *Head;
 	int Amount;
 
 public:
@@ -22,31 +37,54 @@ public:
 	void push_back(const T &val, const int &d = 0);
 	void pop_front();
 
-	unsigned int& operator[](const int ind);
+	T& operator[](const int ind);
 	int GetAmount() { return Amount; }
-
-	Node* GetHead() { return Head; }
+	unsigned int GetDegree(const int ind);
+	Node<T>* GetHead() { return Head; }
 
 	// возвращает адрес элемента по индексу
-	Node* FindElem(const T &ind)
+	Node<T>* FindElem(const int &ind)
 	{
 		if ((ind < 0) || (ind > Amount - 1))
 			throw std::exception("Wrong ind");
 
 		int i = 0;
-		Node *p = Head;
+		Node<T> *p = Head;
 
-		if (ind == 0)
-			return p;
-
-		while ((p->pNext != nullptr) && (i != ind))
+		if (p != nullptr)
 		{
-			p = p->pNext;
-			i++;
+			if (ind == 0)
+				return p;
+
+			while ((p->pNext != nullptr) && (i != ind))
+			{
+				p = p->pNext;
+				i++;
+			}
 		}
 
 		return p;
 	}
+	Node<T>* FindDegr(const unsigned int &d)
+	{
+		if ((ind < 0) || (ind > 999))
+			throw std::exception("Wrong d");
+
+		Node<T> *p = Head;
+
+		if (p != nullptr)
+		{
+			if (p->degr == d)
+				return p;
+
+			while ((p->pNext != nullptr) && (p->degr != d))
+				p = p->pNext;
+		}
+
+		return p;
+	}
+
+	List<T>& operator=(const List<T> &listOut);
 
 	void Sort();
 	void PrintList();
