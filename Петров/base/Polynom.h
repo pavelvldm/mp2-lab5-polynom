@@ -22,6 +22,8 @@ public:
 	Polynom operator*(const Polynom &polyOut);
 	double ValuePoint(double x, double y, double z);
 
+	void ClearZero();
+
 	void PrintPolynom();
 };
 

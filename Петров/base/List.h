@@ -79,6 +79,9 @@ public:
 
 			while ((p->pNext != nullptr) && (p->degr != d))
 				p = p->pNext;
+
+			if (p->degr != d)
+				return nullptr;
 		}
 
 		return p;
@@ -87,6 +90,7 @@ public:
 	List<T>& operator=(const List<T> &listOut);
 	bool operator==(const List<T> &listOut) const;
 	bool operator!=(const List<T> &listOut) const;
+	Node<T>* DelELem(Node<T> *p);
 
 	void Sort();
 	void PrintList();

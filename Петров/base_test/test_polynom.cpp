@@ -37,3 +37,19 @@ TEST(Polynom, mul_scal)
 
 	SUCCEED();
 }
+
+TEST(Polynom, add_polynoms)
+{
+	string s1 = "3,75x^2 + y^2 - 7xz +x^2y + 1,5z^2y - 0,75";
+	string s2 = "-3,75x^2 + 7xz + x^2y + 1,5z^2y + 0,75";
+
+	Polynom testP1;
+	Polynom testP2;
+
+	testP1.CreatePolynom(s1);
+	testP2.CreatePolynom(s2);
+
+	Polynom testResult;
+	testResult = testP1 + testP2;
+	testResult.PrintPolynom();
+}

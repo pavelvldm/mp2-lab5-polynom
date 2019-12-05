@@ -1,5 +1,6 @@
 #include "Polynom.h"
 #include "List.h"
+#include <iostream>
 
 void TransformStr(string &s)
 {
@@ -149,10 +150,16 @@ void Polynom::CreatePolynom(string &s)
 		{
 			string c = s.substr(st + 1, end - st - 1);
 			coeff = stof(c);
+
+			if (s[st] == '-')
+				coeff = -1 * coeff;
 		}
 		else
 			if (num - st == 1)
-				coeff = 1;
+				if (s[st] == '-')
+					coeff = -1;
+				else
+					coeff = 1;
 			else
 			{
 				string c = s.substr(st + 1, num - st - 1);
@@ -263,6 +270,8 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 
 	Result.coef = polyOut.coef;
 
+	Result.PrintPolynom();
+
 	Node<double> *p = coef.GetHead();
 	Node<double> *pp;
 
@@ -285,8 +294,13 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 			Result.coef.push_back(p->data, p->degr);
 	}
 
-	// чистить нулевые и сортировать !!!
-	return *this;
+	Result.ClearZero();
+	Result.coef.Sort();
+
+	std::cout << "New\n";
+	Result.PrintPolynom();
+
+	return Result;
 }
 
 Polynom& Polynom::MulScalar(const int &scal)
@@ -305,6 +319,23 @@ Polynom& Polynom::MulScalar(const int &scal)
 	}
 
 	return *this;
+}
+
+void Polynom::ClearZero()
+{
+	Node<double> *p = coef.GetHead();
+
+	while (p->pNext != nullptr)
+	{
+		p = p->pNext;
+		if (p->data == 0)
+			p = coef.DelELem(p);
+	}
+
+	p = coef.GetHead();
+
+	if (p->data == 0)
+		p = coef.DelELem(p);
 }
 
 void Polynom::PrintPolynom()

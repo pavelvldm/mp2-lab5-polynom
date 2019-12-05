@@ -31,7 +31,6 @@ void List<T>::push_back(const T &val, const int &d = 0)
 	if (Head == nullptr)
 	{
 		Head = new Node<T>;
-		Head->pNext = nullptr;
 		Head->data = val;
 		Head->degr = d;
 
@@ -45,7 +44,6 @@ void List<T>::push_back(const T &val, const int &d = 0)
 			p = p->pNext;
 
 		p->pNext = new Node<T>;
-		p->pNext->pNext = nullptr;
 		p->pNext->data = val;
 		p->pNext->degr = d;
 
@@ -175,6 +173,43 @@ template<typename T>
 bool List<T>::operator!=(const List<T> &listOut) const
 {
 	return !(*this == listOut);
+}
+
+template<typename T>
+Node<T>* List<T>::DelELem(Node<T> *p)
+{
+	if (p == Head)
+	{
+		if (p->pNext != nullptr)
+		{
+			Head = p->pNext;
+			delete p;
+			return Head;
+		}
+		else
+		{
+			delete p;
+			return nullptr;
+		}
+	}
+
+	Node<T> *cur = Head;
+
+	while (cur->pNext != p)
+		cur = cur->pNext;
+
+	if (p->pNext != nullptr)
+	{
+		cur->pNext = p->pNext;
+		delete p;
+		return cur;
+	}
+	else
+	{
+		cur->pNext = nullptr;
+		delete p;
+		return cur;
+	}
 }
 
 template<typename T>
