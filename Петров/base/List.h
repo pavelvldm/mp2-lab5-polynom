@@ -67,7 +67,7 @@ public:
 	}
 	Node<T>* FindDegr(const unsigned int &d)
 	{
-		if ((ind < 0) || (ind > 999))
+		if ((d < 0) || (d > 999))
 			throw std::exception("Wrong d");
 
 		Node<T> *p = Head;
@@ -85,6 +85,8 @@ public:
 	}
 
 	List<T>& operator=(const List<T> &listOut);
+	bool operator==(const List<T> &listOut) const;
+	bool operator!=(const List<T> &listOut) const;
 
 	void Sort();
 	void PrintList();

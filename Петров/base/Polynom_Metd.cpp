@@ -286,6 +286,7 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 	}
 
 	// чистить нулевые и сортировать !!!
+	return *this;
 }
 
 Polynom& Polynom::MulScalar(const int &scal)

@@ -75,6 +75,21 @@ TEST(List, cant_find_element_with_large_index)
 	ASSERT_ANY_THROW(testList.FindElem(7));
 }
 
+TEST(List, compare_equal_lists)
+{
+	List<int> testList1;
+	List<int> testList2;
+
+	srand(time(0));
+
+	for (int i = 4; i > -1; i--)
+		testList1.push_back(rand() % 100 - 1);
+
+	testList2 = testList1;
+
+	EXPECT_EQ(testList1, testList2);
+}
+
 TEST(List, can_sort_list)
 {
 	List<int> testList;

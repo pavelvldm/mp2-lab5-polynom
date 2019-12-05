@@ -112,9 +112,20 @@ List<T>& List<T>::operator=(const List<T> &listOut)
 {
 	if (this != &listOut)
 	{
-		delete this;
+		if (Head != nullptr)
+		{
+			while (Head->pNext != nullptr)
+			{
+				Node<T> *p = Head;
+				Head = Head->pNext;
+				delete p;
+			}
 
-		Node<T> *p = listOut.GetHead();
+			Node<T> *p = Head;
+			delete p;
+		}
+
+		Node<T> *p = listOut.Head;
 		
 		if (p != nullptr)
 		{
@@ -129,6 +140,41 @@ List<T>& List<T>::operator=(const List<T> &listOut)
 	}
 
 	return *this;
+}
+
+template<typename T>
+bool List<T>::operator==(const List<T> &listOut) const
+{
+	if (Amount != listOut.Amount)
+		return false;
+
+	if ((Head != nullptr) && (listOut.Head != nullptr))
+	{
+		Node<T> *p1 = Head;
+		Node<T> *p2 = listOut.Head;
+
+		if ((p1->data != p2->data) && (p1->degr != p2->degr))
+			return false;
+
+		while ((p1->pNext != nullptr) && (p2->pNext != nullptr))
+		{
+			p1 = p1->pNext;
+			p2 = p2->pNext;
+
+			if ((p1->data != p2->data) && (p1->degr != p2->degr))
+				return false;
+		}
+
+		return true;
+	}
+
+	return true;
+}
+
+template<typename T>
+bool List<T>::operator!=(const List<T> &listOut) const
+{
+	return !(*this == listOut);
 }
 
 template<typename T>
