@@ -12,7 +12,7 @@ class Polynom
 	List<double> coef;
 public:
 	Polynom();
-	//Polynom(const Polynom &polyOut);
+	Polynom(string &s);
 	~Polynom();
 
 	void CreatePolynom(string &s);
@@ -20,11 +20,13 @@ public:
 
 	Polynom& operator+=(const Polynom &polyOut);
 	Polynom operator+(const Polynom &polyOut);
-	Polynom& MulScalar(const int &scal);
+	Polynom& operator*(const int &scal);
 	Polynom operator*(const Polynom &polyOut);
-	double ValuePoint(double x, double y, double z);
+	double ValuePoint(const double &x, const double &y, const double &z);
 
 	Polynom& operator=(const Polynom &polyOut);
+	bool operator==(const Polynom &polyOut) const;
+	bool operator!=(const Polynom &polyOut) const;
 
 	void ClearZero();
 

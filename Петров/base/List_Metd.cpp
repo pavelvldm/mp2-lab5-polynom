@@ -5,24 +5,6 @@ List<T>::List() : Head(nullptr), Amount(0)
 {
 }
 
-/*template<typename T>
-List<T>::List(const List<T>& listOut)
-{
-	Node<T> *p = listOut.Head;
-
-	if (p != nullptr)
-	{
-		push_back(p->data, p->degr);
-
-		while (p->pNext != nullptr)
-		{
-			p = p->pNext;
-			push_back(p->data, p->degr);
-		}
-	}
-}
-*/
-
 template<typename T>
 List<T>::~List()
 {
@@ -154,6 +136,8 @@ List<T>& List<T>::operator=(const List<T> &listOut)
 				push_back(p->data, p->degr);
 			}
 		}
+
+		Amount = listOut.Amount;
 	}
 
 	return *this;
@@ -203,11 +187,13 @@ Node<T>* List<T>::DelELem(Node<T> *p)
 		{
 			Head = p->pNext;
 			delete p;
+			Amount--;
 			return Head;
 		}
 		else
 		{
 			delete p;
+			Amount--;
 			return nullptr;
 		}
 	}
@@ -221,12 +207,14 @@ Node<T>* List<T>::DelELem(Node<T> *p)
 	{
 		cur->pNext = p->pNext;
 		delete p;
+		Amount--;
 		return cur;
 	}
 	else
 	{
 		cur->pNext = nullptr;
 		delete p;
+		Amount--;
 		return cur;
 	}
 }
@@ -271,24 +259,5 @@ void List<T>::Sort()
 
 		if (Current->degr < Head->degr)
 			Head = Current;
-	}
-}
-
-template<typename T>
-void List<T>::PrintList()
-{
-	Node<T> *p = Head;
-
-	if (p == nullptr)
-		return;
-
-	std::cout << p->data << ' ';
-	std::cout << p->degr << std::endl;
-
-	while (p->pNext != nullptr)
-	{
-		p = p->pNext;
-		std::cout << p->data << ' ';
-		std::cout << p->degr << std::endl;
 	}
 }

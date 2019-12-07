@@ -133,6 +133,11 @@ Polynom::Polynom()
 {
 }
 
+Polynom::Polynom(string &s)
+{
+	CreatePolynom(s);
+}
+
 /*
 Polynom::Polynom(const Polynom &polyOut)
 {
@@ -295,10 +300,6 @@ void Polynom::CreatePolynom(string &s)
 	coef.Sort();
 }
 
-void CreateString()
-{
-}
-
 Polynom& Polynom::operator+=(const Polynom &polyOut)
 {
 	Polynom Result;
@@ -346,7 +347,7 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 	return Result;
 }
 
-Polynom& Polynom::MulScalar(const int &scal)
+Polynom& Polynom::operator*(const int &scal)
 {
 	Node<double> *p = coef.GetHead();
 
@@ -364,12 +365,70 @@ Polynom& Polynom::MulScalar(const int &scal)
 	return *this;
 }
 
+double Polynom::ValuePoint(const double &x, const double &y, const double &z)
+{
+	double Result = 0;
+	double tmp = 0;
+	int powX, powY, powZ;
+
+	Node<double> *p = coef.GetHead();
+
+	if (p != nullptr)
+	{
+		tmp = p->data;
+		
+		powX = GetPowX(p->degr);
+		powY = GetPowY(p->degr);
+		powZ = GetPowZ(p->degr);
+
+		if (powX)
+			tmp = tmp * pow(x, powX);
+		if (powY)
+			tmp = tmp * pow(y, powY);
+		if (powZ)
+			tmp = tmp * pow(z, powZ);
+	
+		Result += tmp;
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+
+			tmp = p->data;
+			powX = GetPowX(p->degr);
+			powY = GetPowY(p->degr);
+			powZ = GetPowZ(p->degr);
+
+			if (powX)
+				tmp = tmp * pow(x, powX);
+			if (powY)
+				tmp = tmp * pow(y, powY);
+			if (powZ)
+				tmp = tmp * pow(z, powZ);
+
+			Result += tmp;
+		}
+	}
+
+	return Result;
+}
+
 Polynom& Polynom::operator=(const Polynom &polyOut)
 {
 	if (this != &polyOut)
 		coef = polyOut.coef;
 
 	return *this;
+}
+
+bool Polynom::operator==(const Polynom &polyOut) const
+{
+	return coef == polyOut.coef;
+}
+
+bool Polynom::operator!=(const Polynom &polyOut) const
+{
+	return coef != polyOut.coef;
 }
 
 void Polynom::ClearZero()
