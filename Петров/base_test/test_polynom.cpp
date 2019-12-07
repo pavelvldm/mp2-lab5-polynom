@@ -49,7 +49,9 @@ TEST(Polynom, add_polynoms)
 	testP1.CreatePolynom(s1);
 	testP2.CreatePolynom(s2);
 
+	unsigned int i = 12;
+
 	Polynom testResult;
-	testResult = testP1 + testP2;
-	testResult.PrintPolynom();
+	testP1 += testP2;
+	testP1.PrintPolynom();
 }

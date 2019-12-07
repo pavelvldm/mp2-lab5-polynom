@@ -100,10 +100,45 @@ int RetPowZ(string &s, int &num, int &end)
 	return Result;
 }
 
+int GetPowX(unsigned int &d)
+{
+	unsigned int i = d / 100;
+	if (i)
+		return i;
+	else
+		return 0;
+}
+
+int GetPowY(unsigned int &d)
+{
+	unsigned int i = d / 10 % 10;
+
+	if (i)
+		return i;
+	else
+		return 0;
+}
+
+int GetPowZ(unsigned int &d)
+{
+	int i = d % 10;
+
+	if (i)
+		return i;
+	else
+		return 0;
+}
+
 Polynom::Polynom()
 {
 }
 
+/*
+Polynom::Polynom(const Polynom &polyOut)
+{
+	List<double> coef(polyOut.coef);
+}
+*/
 
 Polynom::~Polynom()
 {
@@ -264,13 +299,11 @@ void CreateString()
 {
 }
 
-Polynom Polynom::operator+(const Polynom &polyOut)
+Polynom& Polynom::operator+=(const Polynom &polyOut)
 {
 	Polynom Result;
 
 	Result.coef = polyOut.coef;
-
-	Result.PrintPolynom();
 
 	Node<double> *p = coef.GetHead();
 	Node<double> *pp;
@@ -297,8 +330,18 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 	Result.ClearZero();
 	Result.coef.Sort();
 
-	std::cout << "New\n";
-	Result.PrintPolynom();
+	*this = Result;
+
+	return *this;
+}
+
+Polynom Polynom::operator+(const Polynom &polyOut)
+{
+	Polynom Result;
+
+	Result.coef = polyOut.coef;
+
+	Result += *this;
 
 	return Result;
 }
@@ -321,6 +364,14 @@ Polynom& Polynom::MulScalar(const int &scal)
 	return *this;
 }
 
+Polynom& Polynom::operator=(const Polynom &polyOut)
+{
+	if (this != &polyOut)
+		coef = polyOut.coef;
+
+	return *this;
+}
+
 void Polynom::ClearZero()
 {
 	Node<double> *p = coef.GetHead();
@@ -338,7 +389,77 @@ void Polynom::ClearZero()
 		p = coef.DelELem(p);
 }
 
+string Polynom::CreateString()
+{
+	string Result;
+	int powX, powY, powZ;
+
+	Node<double> *p = coef.GetHead();
+
+	if (p != nullptr)
+	{
+		powX = GetPowX(p->degr);
+		powY = GetPowY(p->degr);
+		powZ = GetPowZ(p->degr);
+
+		Result += to_string(p->data);
+
+		if (powX)
+			if (powX != 1)
+				Result = Result + "x^" + to_string(powX);
+			else
+				Result += 'x';
+
+		if (powY)
+			if (powY != 1)
+				Result = Result + "y^" + to_string(powY);
+			else
+				Result += 'y';
+
+		if (powZ)
+			if (powZ != 1)
+				Result = Result + "z^" + to_string(powZ);
+			else
+				Result += 'z';
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+
+			powX = GetPowX(p->degr);
+			powY = GetPowY(p->degr);
+			powZ = GetPowZ(p->degr);
+
+			if (p->data > 0)
+				Result += '+';
+
+			Result += to_string(p->data);
+
+			if (powX)
+				if (powX != 1)
+					Result = Result + "x^" + to_string(powX);
+				else
+					Result += 'x';
+
+			if (powY)
+				if (powY != 1)
+					Result = Result + "y^" + to_string(powY);
+				else
+					Result += 'y';
+
+			if (powZ)
+				if (powZ != 1)
+					Result = Result + "z^" + to_string(powZ);
+				else
+					Result += 'z';
+		}
+	}
+
+	return Result;
+}
+
 void Polynom::PrintPolynom()
 {
-	coef.PrintList();
+	string s = CreateString();
+	cout << s << endl;
 }

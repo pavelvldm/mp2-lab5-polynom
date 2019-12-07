@@ -32,6 +32,7 @@ class List
 
 public:
 	List();
+	// List(const List<T> &listOut);
 	~List();
 
 	void push_back(const T &val, const int &d = 0);
@@ -65,6 +66,7 @@ public:
 
 		return p;
 	}
+
 	Node<T>* FindDegr(const unsigned int &d)
 	{
 		if ((d < 0) || (d > 999))
