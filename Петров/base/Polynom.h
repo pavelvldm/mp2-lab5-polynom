@@ -22,6 +22,7 @@ public:
 	Polynom& operator+=(const Polynom &polyOut);
 	Polynom operator+(const Polynom &polyOut);
 	Polynom& operator*(const int &scal);
+	Polynom& operator*=(const Polynom &polyOut);
 	Polynom operator*(const Polynom &polyOut);
 	double ValuePoint(const double &x, const double &y, const double &z);
 
@@ -31,6 +32,7 @@ public:
 
 	void ClearZero();
 
-	void PrintPolynom();
+	friend istream& operator>>(istream &in, Polynom &polyOut);
+	friend ostream& operator<<(ostream &out, Polynom &polyOut);
 };
 

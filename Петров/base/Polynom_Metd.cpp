@@ -358,6 +358,16 @@ Polynom& Polynom::operator*(const int &scal)
 	return *this;
 }
 
+Polynom& Polynom::operator*=(const Polynom &polyOut)
+{
+	return *this;
+}
+
+Polynom Polynom::operator*(const Polynom &polyOut)
+{
+	return *this;
+}
+
 double Polynom::ValuePoint(const double &x, const double &y, const double &z)
 {
 	double Result = 0;
@@ -454,7 +464,11 @@ string Polynom::CreateString()
 		powY = GetPowY(p->degr);
 		powZ = GetPowZ(p->degr);
 
-		Result += to_string(p->data);
+		if (p->data == -1)
+			Result += '-';
+		else
+			if (p->data != 1)
+				Result += to_string(p->data);
 
 		if (powX)
 			if (powX != 1)
@@ -510,8 +524,20 @@ string Polynom::CreateString()
 	return Result;
 }
 
-void Polynom::PrintPolynom()
+istream& operator>>(istream &in, Polynom &polyOut)
 {
-	string s = CreateString();
-	cout << s << endl;
+	string In;
+	getline(cin, In);
+
+	polyOut.CreatePolynom(In);
+
+	return in;
+}
+
+ostream& operator<<(ostream &out, Polynom &polyOut)
+{
+	string Out = polyOut.CreateString();
+	cout << Out << endl;
+
+	return out;
 }

@@ -37,8 +37,6 @@ TEST(Polynom, can_add_polynoms)
 	Polynom tR;
 	// testP1 += testP2;
 	tR = testP1 + testP2;
-
-	tR.PrintPolynom();
 	
 	// EXPECT_EQ(testResult, testP1);
 	EXPECT_EQ(testResult, tR);
