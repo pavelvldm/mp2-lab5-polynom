@@ -34,9 +34,14 @@ TEST(Polynom, can_add_polynoms)
 	Polynom testP2(s2);
 
 	Polynom testResult(s3);
-	testP1 += testP2;
+	Polynom tR;
+	// testP1 += testP2;
+	tR = testP1 + testP2;
+
+	tR.PrintPolynom();
 	
-	EXPECT_EQ(testResult, testP1);
+	// EXPECT_EQ(testResult, testP1);
+	EXPECT_EQ(testResult, tR);
 }
 
 TEST(Polynom, can_compute_value_in_point)

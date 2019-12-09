@@ -6,6 +6,27 @@ List<T>::List() : Head(nullptr), Amount(0)
 }
 
 template<typename T>
+List<T>::List(const List<T> &listOut)
+{
+	Amount = 0;
+	Head = nullptr;
+
+	if (listOut.Head != nullptr)
+	{
+		Amount = listOut.Amount;
+		Node<T> *p = listOut.Head;
+
+		push_back(p->data, p->degr);
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+			push_back(p->data, p->degr);
+		}
+	}
+}
+
+template<typename T>
 List<T>::~List()
 {
 	if (Head != nullptr)
@@ -136,8 +157,6 @@ List<T>& List<T>::operator=(const List<T> &listOut)
 				push_back(p->data, p->degr);
 			}
 		}
-
-		Amount = listOut.Amount;
 	}
 
 	return *this;

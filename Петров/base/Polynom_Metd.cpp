@@ -133,17 +133,15 @@ Polynom::Polynom()
 {
 }
 
+Polynom::Polynom(const Polynom &polyOut)
+{
+	coef = polyOut.coef;
+}
+
 Polynom::Polynom(string &s)
 {
 	CreatePolynom(s);
 }
-
-/*
-Polynom::Polynom(const Polynom &polyOut)
-{
-	List<double> coef(polyOut.coef);
-}
-*/
 
 Polynom::~Polynom()
 {
@@ -302,9 +300,7 @@ void Polynom::CreatePolynom(string &s)
 
 Polynom& Polynom::operator+=(const Polynom &polyOut)
 {
-	Polynom Result;
-
-	Result.coef = polyOut.coef;
+	Polynom Result(polyOut);
 
 	Node<double> *p = coef.GetHead();
 	Node<double> *pp;
@@ -338,11 +334,8 @@ Polynom& Polynom::operator+=(const Polynom &polyOut)
 
 Polynom Polynom::operator+(const Polynom &polyOut)
 {
-	Polynom Result;
-
-	Result.coef = polyOut.coef;
-
-	Result += *this;
+	Polynom Result(*this);
+	Result += polyOut;
 
 	return Result;
 }

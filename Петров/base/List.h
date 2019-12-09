@@ -32,6 +32,7 @@ class List
 
 public:
 	List();
+	List(const List<T> &listOut);
 	~List();
 
 	void push_back(const T &val, const int &d = 0);

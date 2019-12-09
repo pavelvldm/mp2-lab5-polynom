@@ -13,6 +13,7 @@ class Polynom
 public:
 	Polynom();
 	Polynom(string &s);
+	Polynom(const Polynom &polyOut);
 	~Polynom();
 
 	void CreatePolynom(string &s);
