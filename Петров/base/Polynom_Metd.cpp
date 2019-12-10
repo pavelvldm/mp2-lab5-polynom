@@ -393,7 +393,11 @@ Polynom Polynom::operator*(Polynom &polyOut)
 		{
 			NewC = (p->data)*(pp->data);
 			NewDeg = (p->degr) + (pp->degr);
-			Result.coef.push_back(NewC, NewDeg);
+			Node<double> *tmp = Result.coef.FindDegr(NewDeg);
+			if (tmp != nullptr)
+				tmp->data += NewC;
+			else
+				Result.coef.push_back(NewC, NewDeg);
 		}
 		else
 			throw exception("error");
@@ -410,7 +414,11 @@ Polynom Polynom::operator*(Polynom &polyOut)
 			{
 				NewC = (p->data)*(pp->data);
 				NewDeg = (p->degr) + (pp->degr);
-				Result.coef.push_back(NewC, NewDeg);
+				Node<double> *tmp = Result.coef.FindDegr(NewDeg);
+				if (tmp != nullptr)
+					tmp->data += NewC;
+				else
+					Result.coef.push_back(NewC, NewDeg);
 			}
 			else
 				throw exception("error");
@@ -434,7 +442,11 @@ Polynom Polynom::operator*(Polynom &polyOut)
 			{
 				NewC = (p->data)*(pp->data);
 				NewDeg = (p->degr) + (pp->degr);
-				Result.coef.push_back(NewC, NewDeg);
+				Node<double> *tmp = Result.coef.FindDegr(NewDeg);
+				if (tmp != nullptr)
+					tmp->data += NewC;
+				else
+					Result.coef.push_back(NewC, NewDeg);
 			}
 			else
 				throw exception("error");
@@ -451,7 +463,11 @@ Polynom Polynom::operator*(Polynom &polyOut)
 				{
 					NewC = (p->data)*(pp->data);
 					NewDeg = (p->degr) + (pp->degr);
-					Result.coef.push_back(NewC, NewDeg);
+					Node<double> *tmp = Result.coef.FindDegr(NewDeg);
+					if (tmp != nullptr)
+						tmp->data += NewC;
+					else
+						Result.coef.push_back(NewC, NewDeg);
 				}
 			}
 

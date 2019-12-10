@@ -46,7 +46,7 @@ TEST(Polynom, can_multiply_polynoms)
 {
 	string s1 = "2xyz - 3x^2 + 7y^2z";
 	string s2 = "5x^2y^5 - 6z^7";
-	string s3 = "10x^3y^6z - 15x^4y^5 + 35x^2y^7z - 12xyz^8 + 18x^2z^7 - 42y^2z^9";
+	string s3 = "10x^3y^6z - 15x^4y^5 + 35x^2y^7z - 12xyz^8 + 18x^2z^7 - 42y^2z^8";
 
 	Polynom testP1(s1);
 	Polynom testP2(s2);
@@ -60,20 +60,18 @@ TEST(Polynom, can_multiply_polynoms)
 
 TEST(Polynom, can_multiply_polynoms_2)
 {
-	string s1 = "2xyz - 3x^2 + 7y^2z";
-	string s2 = "5x^2y^5 - 6z^7";
-	string s3 = "10x^3y^6z - 15x^4y^5 + 35x^2y^7z - 12xyz^8 + 18x^2z^7 - 42y^2z^9";
+	string s1 = "2x^3yz - 4yzx^2";
+	string s2 = "5x^2y^3z + y^3zx^3";
+	string s3 = "6x^5y^4z^2 - 20x^4y^4z^2 + 2x^6y^4z^2";
 
 	Polynom testP1(s1);
 	Polynom testP2(s2);
 
 	Polynom testResult(s3);
 	testP1 *= testP2;
+	Polynom tR(testP1);
 
-	cout << testP1;
-	cout << testResult;
-
-	EXPECT_EQ(testResult, testP1);
+	EXPECT_EQ(testResult, tR);
 }
 
 TEST(Polynom, can_compute_value_in_point)
