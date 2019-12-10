@@ -358,14 +358,110 @@ Polynom& Polynom::operator*(const int &scal)
 	return *this;
 }
 
-Polynom& Polynom::operator*=(const Polynom &polyOut)
+Polynom& Polynom::operator*=(Polynom &polyOut)
 {
+	Polynom Result;
+
+	Result = (*this) * polyOut;
+	(*this) = Result;
+
 	return *this;
 }
 
-Polynom Polynom::operator*(const Polynom &polyOut)
+Polynom Polynom::operator*(Polynom &polyOut)
 {
-	return *this;
+	Node<double> *p = coef.GetHead();
+	Node<double> *pp = polyOut.coef.GetHead();
+
+	int NewDeg;
+	int x1, y1, z1;
+	int x2, y2, z2;
+	double NewC;
+	Polynom Result;
+
+	if ((p != nullptr) && (pp != nullptr))
+	{
+		x1 = GetPowX(p->degr);
+		y1 = GetPowY(p->degr);
+		z1 = GetPowZ(p->degr);
+
+		x2 = GetPowX(pp->degr);
+		y2 = GetPowY(pp->degr);
+		z2 = GetPowZ(pp->degr);
+
+		if (((x1 + x2) < 10) && ((y1 + y2) < 10) && ((z1 + z2) < 10))
+		{
+			NewC = (p->data)*(pp->data);
+			NewDeg = (p->degr) + (pp->degr);
+			Result.coef.push_back(NewC, NewDeg);
+		}
+		else
+			throw exception("error");
+
+		while (pp->pNext != nullptr)
+		{
+			pp = pp->pNext;
+
+			x2 = GetPowX(pp->degr);
+			y2 = GetPowY(pp->degr);
+			z2 = GetPowZ(pp->degr);
+
+			if (((x1 + x2) < 10) && ((y1 + y2) < 10) && ((z1 + z2) < 10))
+			{
+				NewC = (p->data)*(pp->data);
+				NewDeg = (p->degr) + (pp->degr);
+				Result.coef.push_back(NewC, NewDeg);
+			}
+			else
+				throw exception("error");
+		}
+
+		pp = polyOut.coef.GetHead();
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+
+			x1 = GetPowX(p->degr);
+			y1 = GetPowY(p->degr);
+			z1 = GetPowZ(p->degr);
+
+			x2 = GetPowX(pp->degr);
+			y2 = GetPowY(pp->degr);
+			z2 = GetPowZ(pp->degr);
+
+			if (((x1 + x2) < 10) && ((y1 + y2) < 10) && ((z1 + z2) < 10))
+			{
+				NewC = (p->data)*(pp->data);
+				NewDeg = (p->degr) + (pp->degr);
+				Result.coef.push_back(NewC, NewDeg);
+			}
+			else
+				throw exception("error");
+
+			while (pp->pNext != nullptr)
+			{
+				pp = pp->pNext;
+
+				x2 = GetPowX(pp->degr);
+				y2 = GetPowY(pp->degr);
+				z2 = GetPowZ(pp->degr);
+
+				if (((x1 + x2) < 10) && ((y1 + y2) < 10) && ((z1 + z2) < 10))
+				{
+					NewC = (p->data)*(pp->data);
+					NewDeg = (p->degr) + (pp->degr);
+					Result.coef.push_back(NewC, NewDeg);
+				}
+			}
+
+			pp = polyOut.coef.GetHead();
+		}
+	}
+
+	Result.coef.Sort();
+
+	return Result;
 }
 
 double Polynom::ValuePoint(const double &x, const double &y, const double &z)
