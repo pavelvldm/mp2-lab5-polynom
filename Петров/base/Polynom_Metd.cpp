@@ -150,7 +150,10 @@ Polynom::~Polynom()
 void Polynom::CreatePolynom(string &s)
 {
 	if (s.size() == 0)
-		throw exception("void");
+	{
+		coef.push_back(0);
+		return;
+	}
 
 	TransformStr(s);
 
@@ -305,16 +308,13 @@ Polynom& Polynom::operator+=(const Polynom &polyOut)
 	Node<double> *p = coef.GetHead();
 	Node<double> *pp;
 
-	pp = Result.coef.FindDegr(p->degr);
-
-	if (pp != nullptr)
-		pp->data += p->data;
-	else
-		Result.coef.push_back(p->data, p->degr);
-
-	while (p->pNext != nullptr)
+	if (p != nullptr)
 	{
-		p = p->pNext;
+		if ((p->pNext == nullptr) && (p->data == 0))
+		{
+			*this = Result;
+			return *this;
+		}
 
 		pp = Result.coef.FindDegr(p->degr);
 
@@ -322,14 +322,26 @@ Polynom& Polynom::operator+=(const Polynom &polyOut)
 			pp->data += p->data;
 		else
 			Result.coef.push_back(p->data, p->degr);
+
+		while (p->pNext != nullptr)
+		{
+			p = p->pNext;
+
+			pp = Result.coef.FindDegr(p->degr);
+
+			if (pp != nullptr)
+				pp->data += p->data;
+			else
+				Result.coef.push_back(p->data, p->degr);
+		}
+
+		Result.ClearZero();
+		Result.coef.Sort();
+
+		*this = Result;
+
+		return *this;
 	}
-
-	Result.ClearZero();
-	Result.coef.Sort();
-
-	*this = Result;
-
-	return *this;
 }
 
 Polynom Polynom::operator+(const Polynom &polyOut)
@@ -381,6 +393,18 @@ Polynom Polynom::operator*(Polynom &polyOut)
 
 	if ((p != nullptr) && (pp != nullptr))
 	{
+		if ((p->pNext == nullptr) && (p->data == 0))
+		{
+			Result.coef.push_back(0);
+			return Result;
+		}
+
+		if ((pp->pNext == nullptr) && (pp->data == 0))
+		{
+			Result.coef.push_back(0);
+			return Result;
+		}
+
 		x1 = GetPowX(p->degr);
 		y1 = GetPowY(p->degr);
 		z1 = GetPowZ(p->degr);
@@ -389,7 +413,7 @@ Polynom Polynom::operator*(Polynom &polyOut)
 		y2 = GetPowY(pp->degr);
 		z2 = GetPowZ(pp->degr);
 
-		if (((x1 + x2) < 10) && ((y1 + y2) < 10) && ((z1 + z2) < 10))
+		if (((x1 + x2) < MAX_POLYNOM_POW) && ((y1 + y2) < MAX_POLYNOM_POW) && ((z1 + z2) < MAX_POLYNOM_POW))
 		{
 			NewC = (p->data)*(pp->data);
 			NewDeg = (p->degr) + (pp->degr);
