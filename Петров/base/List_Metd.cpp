@@ -40,15 +40,14 @@ List<T>::~List()
 
 		Node<T> *p = Head;
 		delete p;
+
+		Amount = 0;
 	}
 }
 
 template<typename T>
 void List<T>::push_back(const T &val, const int &d = 0)
 {
-	if (Amount == MAX_LIST_SIZE)
-		throw std::exception("Is Full");
-
 	if (Head == nullptr)
 	{
 		Head = new Node<T>;
@@ -82,6 +81,8 @@ void List<T>::pop_front()
 		delete p;
 		Amount--;
 	}
+	else
+		throw std::exception("void");
 }
 
 template<typename T>
@@ -138,10 +139,12 @@ List<T>& List<T>::operator=(const List<T> &listOut)
 				Node<T> *p = Head;
 				Head = Head->pNext;
 				delete p;
+				Amount--;
 			}
 
 			Node<T> *p = Head;
 			delete p;
+			Amount--;
 			Head = nullptr;
 		}
 

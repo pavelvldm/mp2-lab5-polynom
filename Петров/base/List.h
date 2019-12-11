@@ -1,12 +1,10 @@
 #pragma once
 
-const int MAX_LIST_SIZE = 1000;
-
 template<typename T>
 struct Node
 {
 	T data;
-	unsigned int degr;
+	int degr;
 	Node *pNext;
 
 	Node()
@@ -67,7 +65,7 @@ public:
 		return p;
 	}
 
-	Node<T>* FindDegr(const unsigned int &d)
+	Node<T>* FindDegr(const int &d)
 	{
 		if ((d < 0) || (d > 999))
 			throw std::exception("Wrong d");

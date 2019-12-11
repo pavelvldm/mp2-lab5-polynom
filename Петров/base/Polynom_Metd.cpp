@@ -100,7 +100,7 @@ int RetPowZ(string &s, int &num, int &end)
 	return Result;
 }
 
-int GetPowX(unsigned int &d)
+int GetPowX(int &d)
 {
 	unsigned int i = d / 100;
 	if (i)
@@ -109,7 +109,7 @@ int GetPowX(unsigned int &d)
 		return 0;
 }
 
-int GetPowY(unsigned int &d)
+int GetPowY(int &d)
 {
 	unsigned int i = d / 10 % 10;
 
@@ -119,7 +119,7 @@ int GetPowY(unsigned int &d)
 		return 0;
 }
 
-int GetPowZ(unsigned int &d)
+int GetPowZ(int &d)
 {
 	int i = d % 10;
 

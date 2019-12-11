@@ -7,12 +7,39 @@ TEST(List, can_create_list)
 	ASSERT_NO_THROW(List<int> testList);
 }
 
+TEST(List, can_get_amount)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	EXPECT_EQ(5, testList.GetAmount());
+}
+
 TEST(List, can_push_back_in_void)
 {
 	List<int> testList;
 	int testValue = 5;
 
 	ASSERT_NO_THROW(testList.push_back(5));
+}
+
+TEST(List, cant_pop_front_when_list_is_void)
+{
+	List<int> testList;
+
+	ASSERT_ANY_THROW(testList.pop_front());
+}
+
+TEST(List, can_pop_first_element_from_list)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	ASSERT_NO_THROW(testList.pop_front());
 }
 
 TEST(List, can_get_element)
@@ -45,6 +72,36 @@ TEST(List, cant_get_element_with_large_index)
 	ASSERT_ANY_THROW(testList[5]);
 }
 
+TEST(List, can_get_degree)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i, i + 1);
+
+	EXPECT_EQ(4, testList.GetDegree(3));
+}
+
+TEST(List, cant_get_degree_with_negative_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 1; i++)
+		testList.push_back(i, i + 1);
+
+	ASSERT_ANY_THROW(testList.GetDegree(-7));
+}
+
+TEST(List, cant_get_degree_with_large_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 1; i++)
+		testList.push_back(i, i + 1);
+
+	ASSERT_ANY_THROW(testList.GetDegree(5));
+}
+
 TEST(List, can_find_element_in_list)
 {
 	List<int> testList;
@@ -75,6 +132,36 @@ TEST(List, cant_find_element_with_large_index)
 	ASSERT_ANY_THROW(testList.FindElem(7));
 }
 
+TEST(List, can_assign_lists_of_non_equal_size)
+{
+	List<int> testList1;
+	List<int> testList2;
+
+	for (int i = 0; i < 1; i++)
+		testList1.push_back(i);
+
+	for (int i = 0; i < 4; i++)
+		testList2.push_back(i + 1);
+
+	testList2 = testList1;
+	EXPECT_EQ(testList1, testList2);
+}
+
+TEST(List, assign_operator_changes_amount)
+{
+	List<int> testList1;
+	List<int> testList2;
+
+	for (int i = 0; i < 1; i++)
+		testList1.push_back(i);
+
+	for (int i = 0; i < 4; i++)
+		testList2.push_back(i + 1);
+
+	testList2 = testList1;
+	EXPECT_EQ(1, testList2.GetAmount());
+}
+
 TEST(List, compare_equal_lists)
 {
 	List<int> testList1;
@@ -88,6 +175,93 @@ TEST(List, compare_equal_lists)
 	testList2 = testList1;
 
 	EXPECT_EQ(testList1, testList2);
+}
+
+TEST(List, can_find_elem_with_degree)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i, 100 + i);
+
+	EXPECT_NE(nullptr, testList.FindDegr(102));
+}
+
+TEST(List, cant_find_elem_with_degree_when_it_is_not_in_list)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i, 100 + i);
+
+	EXPECT_EQ(nullptr, testList.FindDegr(24));
+}
+
+TEST(List, cant_find_elem_with_negative_degree)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i, 100 + i);
+
+	ASSERT_ANY_THROW(testList.FindDegr(-87));
+}
+
+TEST(List, cant_find_elem_with_large_degree)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i, 100 + i);
+
+	ASSERT_ANY_THROW(testList.FindDegr(1001));
+}
+
+TEST(List, can_find_elem_in_list)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	EXPECT_NE(nullptr, testList.FindElem(3));
+}
+
+TEST(List, cant_find_elem_with_negative_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	ASSERT_ANY_THROW(testList.FindElem(-8));
+}
+
+TEST(List, cant_find_elem_with_large_index)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	ASSERT_ANY_THROW(testList.FindElem(7));
+}
+
+TEST(List, can_delete_element_in_list)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 5; i++)
+		testList.push_back(i);
+
+	Node<int> *p = testList.FindElem(2);
+	Node<int> *p1 = testList.FindElem(1);
+	Node<int> *p2 = testList.FindElem(3);
+
+	p = testList.DelELem(p);
+
+	EXPECT_EQ(p2, p1->pNext);
+	EXPECT_EQ(p1, p);
 }
 
 TEST(List, can_sort_list)
