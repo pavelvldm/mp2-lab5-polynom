@@ -21,7 +21,7 @@ public:
 
 	Polynom& operator+=(Polynom &polyOut);
 	Polynom operator+(const Polynom &polyOut);
-	Polynom& operator*(const int &scal);
+	Polynom& operator*(const double &scal);
 	Polynom& operator*=(Polynom &polyOut);
 	Polynom operator*(Polynom &polyOut);
 	double ValuePoint(const double &x, const double &y, const double &z);

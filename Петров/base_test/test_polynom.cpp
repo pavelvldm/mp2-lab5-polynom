@@ -1,7 +1,7 @@
 #include <gtest.h>
 
 #include "Polynom.h"
-#include "List_Metd.cpp"
+//#include "List_Metd.cpp"
 #include "Polynom_Metd.cpp"
 
 TEST(Polynom, can_create_polynom_with_string)

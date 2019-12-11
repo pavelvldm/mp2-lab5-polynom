@@ -1,5 +1,6 @@
-#include "Polynom.h"
 #include "List.h"
+#include "Polynom.h"
+#include "List_Metd.cpp"
 #include <iostream>
 
 void TransformStr(string &s)
@@ -190,7 +191,7 @@ void Polynom::CreatePolynom(string &s)
 		if (num == -1)
 		{
 			string c = s.substr(st + 1, end - st - 1);
-			coeff = stof(c);
+			coeff = stod(c);
 
 			if (s[st] == '-')
 				coeff = -1 * coeff;
@@ -204,7 +205,7 @@ void Polynom::CreatePolynom(string &s)
 			else
 			{
 				string c = s.substr(st + 1, num - st - 1);
-				coeff = stof(c);
+				coeff = stod(c);
 			}
 
 		if (num == -1)
@@ -297,7 +298,6 @@ void Polynom::CreatePolynom(string &s)
 		s.erase(st, end - st);
 	}
 
-
 	coef.Sort();
 }
 
@@ -353,7 +353,7 @@ Polynom Polynom::operator+(const Polynom &polyOut)
 	return Result;
 }
 
-Polynom& Polynom::operator*(const int &scal)
+Polynom& Polynom::operator*(const double &scal)
 {
 	Node<double> *p = coef.GetHead();
 
@@ -425,7 +425,7 @@ Polynom Polynom::operator*(Polynom &polyOut)
 				Result.coef.push_back(NewC, NewDeg);
 		}
 		else
-			throw exception("error");
+			throw 2;
 
 		while (pp->pNext != nullptr)
 		{

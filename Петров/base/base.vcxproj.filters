@@ -29,5 +29,8 @@
     <ClCompile Include="Polynom_Metd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sample_polynom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
