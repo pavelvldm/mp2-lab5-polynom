@@ -13,7 +13,6 @@ List<T>::List(const List<T> &listOut)
 
 	if (listOut.Head != nullptr)
 	{
-		Amount = listOut.Amount;
 		Node<T> *p = listOut.Head;
 
 		push_back(p->data, p->degr);

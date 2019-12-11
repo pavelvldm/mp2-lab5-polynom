@@ -19,7 +19,7 @@ public:
 	void CreatePolynom(string &s);
 	string CreateString();
 
-	Polynom& operator+=(const Polynom &polyOut);
+	Polynom& operator+=(Polynom &polyOut);
 	Polynom operator+(const Polynom &polyOut);
 	Polynom& operator*(const int &scal);
 	Polynom& operator*=(Polynom &polyOut);

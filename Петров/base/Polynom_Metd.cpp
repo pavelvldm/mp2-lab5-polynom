@@ -301,7 +301,7 @@ void Polynom::CreatePolynom(string &s)
 	coef.Sort();
 }
 
-Polynom& Polynom::operator+=(const Polynom &polyOut)
+Polynom& Polynom::operator+=(Polynom &polyOut)
 {
 	Polynom Result(polyOut);
 
@@ -342,12 +342,13 @@ Polynom& Polynom::operator+=(const Polynom &polyOut)
 
 		return *this;
 	}
+	else throw exception("smth goes wrong");
 }
 
 Polynom Polynom::operator+(const Polynom &polyOut)
 {
-	Polynom Result(*this);
-	Result += polyOut;
+	Polynom Result(polyOut);
+	Result += *this;
 
 	return Result;
 }
@@ -585,6 +586,17 @@ void Polynom::ClearZero()
 
 	if (p->data == 0)
 		p = coef.DelELem(p);
+
+	p = coef.GetHead();
+	int NewAmount = 1;
+
+	while (p->pNext != nullptr)
+	{
+		p = p->pNext;
+		NewAmount++;
+	}
+
+	coef.SetAmount(NewAmount);
 }
 
 string Polynom::CreateString()

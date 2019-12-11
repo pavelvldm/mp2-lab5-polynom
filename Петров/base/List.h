@@ -38,6 +38,7 @@ public:
 
 	T& operator[](const int ind);
 	int GetAmount() { return Amount; }
+	void SetAmount(const int &nA) { Amount = nA; }
 	unsigned int GetDegree(const int ind);
 	Node<T>* GetHead() { return Head; }
 

@@ -7,6 +7,17 @@ TEST(List, can_create_list)
 	ASSERT_NO_THROW(List<int> testList);
 }
 
+TEST(List, can_create_copied_list)
+{
+	List<int> testList1;
+
+	for (int i = 0; i < 5; i++)
+		testList1.push_back(i);
+
+	List<int> testList2(testList1);
+	EXPECT_EQ(testList1, testList2);
+}
+
 TEST(List, can_get_amount)
 {
 	List<int> testList;
@@ -145,6 +156,16 @@ TEST(List, can_assign_lists_of_non_equal_size)
 
 	testList2 = testList1;
 	EXPECT_EQ(testList1, testList2);
+}
+
+TEST(List, can_assign_list_to_itself)
+{
+	List<int> testList;
+
+	for (int i = 0; i < 4; i++)
+		testList.push_back(i + 1);
+
+	ASSERT_NO_THROW(testList = testList);
 }
 
 TEST(List, assign_operator_changes_amount)
