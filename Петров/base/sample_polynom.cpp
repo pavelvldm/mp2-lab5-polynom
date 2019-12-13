@@ -11,6 +11,7 @@ using namespace std;
 void main()
 {
 	setlocale(LC_ALL, "Rus");
+	setlocale(LC_NUMERIC, "C");
 	int k = 1;
 	int Choice;
 	string s1;
