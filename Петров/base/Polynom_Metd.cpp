@@ -198,9 +198,6 @@ void Polynom::CreatePolynom(string &s)
 		}
 		else
 			if (num - st == 1)
-				if (s[st] == '-')
-					coeff = -1;
-				else
 					coeff = 1;
 			else
 			{
@@ -285,7 +282,7 @@ void Polynom::CreatePolynom(string &s)
 		}
 
 		if ((powx >= MAX_POLYNOM_POW) || (powy >= MAX_POLYNOM_POW) || (powz >= MAX_POLYNOM_POW))
-			throw exception("Wrong powers");
+			throw 3;
 
 		degree = powx * 100 + powy * 10 + powz;
 
@@ -315,6 +312,17 @@ Polynom& Polynom::operator+=(Polynom &polyOut)
 			*this = Result;
 			return *this;
 		}
+
+		if (*this == polyOut*(-1))
+		{
+			polyOut*(-1);
+			string tmps = "";
+			Polynom tmp(tmps);
+			*this = tmp;
+			return *this;
+		}
+
+		polyOut*(-1);
 
 		pp = Result.coef.FindDegr(p->degr);
 

@@ -32,8 +32,31 @@ void main()
 
 	system("cls");
 
-	Polynom P1(s1);
-	Polynom P2(s2);
+	Polynom P1;
+	Polynom P2;
+
+	try
+	{
+		P1.CreatePolynom(s1);
+	}
+	catch (int a)
+	{
+		if (a == 3)
+			cout << "Степень первого многочлена должна быть меньше 10" << endl;
+		return;
+	}
+
+	try
+	{
+		P2.CreatePolynom(s2);
+	}
+	catch (int a)
+	{
+		if (a == 3)
+			cout << "Степень второго многочлена должна быть меньше 10" << endl;
+		return;
+	}
+
 	Polynom Result;
 
 	while (k < 5)
@@ -71,7 +94,7 @@ void main()
 			{
 				if (a == 2)
 				{
-					cout << "Перемножать нельзя, слишком большая степень";
+					cout << "Перемножать нельзя, слишком большая степень" << endl;
 					break;
 				}
 			}
@@ -88,9 +111,11 @@ void main()
 			cin >> Choice;
 			if (Choice == 1)
 			{
-				Result = P1 * sc;
+				Result = P1;
+				P1 = P1 * sc;
 				cout << "Результат: ";
-				cout << Result << endl;
+				cout << P1 << endl;
+				P1 = Result;
 				system("pause");
 				system("cls");
 			}
