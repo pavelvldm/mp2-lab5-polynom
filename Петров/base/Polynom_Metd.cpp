@@ -365,6 +365,14 @@ Polynom& Polynom::operator*(const double &scal)
 {
 	Node<double> *p = coef.GetHead();
 
+	if (scal == 0)
+	{
+		string s = "";
+		Polynom Result(s);
+		*this = Result;
+		return *this;
+	}
+
 	if (p != nullptr)
 	{
 		p->data = scal * p->data;
@@ -454,7 +462,7 @@ Polynom Polynom::operator*(Polynom &polyOut)
 					Result.coef.push_back(NewC, NewDeg);
 			}
 			else
-				throw exception("error");
+				throw 2;
 		}
 
 		pp = polyOut.coef.GetHead();
@@ -482,7 +490,7 @@ Polynom Polynom::operator*(Polynom &polyOut)
 					Result.coef.push_back(NewC, NewDeg);
 			}
 			else
-				throw exception("error");
+				throw 2;
 
 			while (pp->pNext != nullptr)
 			{
@@ -502,6 +510,8 @@ Polynom Polynom::operator*(Polynom &polyOut)
 					else
 						Result.coef.push_back(NewC, NewDeg);
 				}
+				else
+					throw 2;
 			}
 
 			pp = polyOut.coef.GetHead();

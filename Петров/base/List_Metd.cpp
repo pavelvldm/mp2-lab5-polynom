@@ -243,6 +243,9 @@ Node<T>* List<T>::DelELem(Node<T> *p)
 template<typename T>
 void List<T>::Sort()
 {
+	if (Head == nullptr) return;
+	if (Head->pNext == nullptr) return;
+
 	for (int i = 1; i < Amount; i++)
 	{
 		Node<T> *Current = FindElem(i);
